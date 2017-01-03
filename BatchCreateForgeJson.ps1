@@ -7,10 +7,10 @@ param(
 
 Get-ChildItem $texpath -Filter *.png | Foreach-Object {
     if($type.ToLower() -eq "i"){
-        $content = "{`n" + '  "parent": "minecraft:item/generated",' + "`n" + '  "textures": {' + "`n" + '    "layer0": "bluepower:items/' + $_.BaseName + '"' + "`n  }`n}"
+        $content = "{`n" + '  "parent": "minecraft:item/generated",' + "`n" + '  "textures": {' + "`n" + '    "layer0": "' + $modid +':items/' + $_.BaseName + '"' + "`n  }`n}"
         $content | Out-File -Encoding "UTF8" "$destination$($_.BaseName).json"
     }elseif($type.ToLower() -eq "b"){
-        $content = "{`n" + '  "forge_marker": 1,' + "`n" + '  "defaults": {' + "`n" + '    "textures": {' + "`n" + '    "all": "bluepower:blocks/' + $_.BaseName + '"' + "`n    },`n" + '    "model": "cube_all",' + "`n" + '    "uvlock": true' + "`n  },`n" + '  "variants": {'+ "`n" + '    "normal": [{' + "`n`n    }]`n  }`n}"
+        $content = "{`n" + '  "forge_marker": 1,' + "`n" + '  "defaults": {' + "`n" + '    "textures": {' + "`n" + '    "all": "' + $modid + ':blocks/' + $_.BaseName + '"' + "`n    },`n" + '    "model": "cube_all",' + "`n" + '    "uvlock": true' + "`n  },`n" + '  "variants": {'+ "`n" + '    "normal": [{' + "`n`n    }]`n  }`n}"
         $content | Out-File -Encoding "UTF8" "$destination$($_.BaseName).json"
     }
 }
