@@ -1,4 +1,4 @@
-﻿$directions = @("down","north","south","east","west")
+$directions = @("down","north","south","east","west")
 $rotations = @(1,2,3)
 
 function clone($obj){
@@ -27,21 +27,26 @@ function get-mcjson-rotateface{
             switch($dir){
                 "down"{
                     $newitem.apply.x = 180
+                    break
                 }
                 "north"{
                     $newitem.apply.x += 90
+                    break
                 }
                 "south"{
                     $newitem.apply.x += 90
                     $newitem.apply.y += 180
+                    break
                 }
                 "east"{
                     $newitem.apply.x += 90
                     $newitem.apply.y += 90
+                    break
                 }
                 "west"{
                     $newitem.apply.x += 90
                     $newitem.apply.y += 270
+                    break
                 }
             }
 
@@ -58,30 +63,109 @@ function get-mcjson-rotateface{
             foreach($rot in $rotations){
                 $newapply = clone $newitem.apply
                 $newwhen = clone $newitem.when
-                $newitem = @{"when"=$newwhen; "apply"=$newapply}
-                $newitem.when.rotation = $rot
-
-                switch($dir){
+                $newitem2 = @{"when"=$newwhen; "apply"=$newapply}
+                $newitem2.when.rotation = $rot
+                
+                switch($rot){
                     1{
-                        $newitem.apply.y += 90
+                        switch($dir){
+                            "down"{
+                                $newitem2.apply.y += 90
+                                break
+                            }
+                            "north"{
+                                $newitem2.apply.model += "_z"
+                                break
+                            }
+                            "south"{
+                                $newitem2.apply.model += "_z"
+                                break
+                            }
+                            "east"{
+                                $newitem2.apply.model += "_z"
+                                break
+                            }
+                            "west"{
+                                $newitem2.apply.model += "_z"
+                                break
+                            }
+                        }
+                        break
                     }
                     2{
-                        $newitem.apply.y += 180
+                        switch($dir){
+                            "down"{
+                                $newitem2.apply.y += 180
+                                break
+                            }
+                            "north"{
+                                $newitem2.apply.y += 180
+                                $newitem2.apply.x += 180
+                                break
+                            }
+                            "south"{
+                                $newitem2.apply.y += 180
+                                $newitem2.apply.x += 180
+                                break
+                            }
+                            "east"{
+                                $newitem2.apply.y += 180
+                                $newitem2.apply.x += 180
+                                break
+                            }
+                            "west"{
+                                $newitem2.apply.y += 180
+                                $newitem2.apply.x += 180
+                                break
+                            }
+                        }
+                        break
                     }
                     3{
-                        $newitem.apply.y += 270
+                        switch($dir){
+                            "down"{
+                                $newitem2.apply.y += 270
+                                break
+                            }
+                            "north"{
+                                $newitem2.apply.model += "_z"
+                                $newitem2.apply.y -= 180
+                                $newitem2.apply.x += 180
+                                break
+                            }
+                            "south"{
+                                $newitem2.apply.model += "_z"
+                                $newitem2.apply.y -= 180
+                                $newitem2.apply.x += 180
+                                break
+                            }
+                            "east"{
+                                $newitem2.apply.model += "_z"
+                                $newitem2.apply.y -= 180
+                                $newitem2.apply.x += 180
+                                break
+                            }
+                            "west"{
+                                $newitem2.apply.model += "_z"
+                                $newitem2.apply.y -= 180
+                                $newitem2.apply.x += 180
+                                break
+                            }
+                        }
+                        break
                     }
                 }
 
-                if($newitem.apply.x -ge 360){
-                    $newitem.apply.x -= 360
+                if($newitem2.apply.x -ge 360){
+                    $newitem2.apply.x -= 360
                 }
 
-                if($newitem.apply.y -ge 360){
-                    $newitem.apply.y -= 360
+                if($newitem2.apply.y -ge 360){
+                    $newitem2.apply.y -= 360
                 }
 
-                $json.multipart += $newitem
+                $json.multipart += $newitem2
+                $newitem2 = $null
             }
         }
     }
